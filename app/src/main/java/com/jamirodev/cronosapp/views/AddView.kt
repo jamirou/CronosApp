@@ -131,7 +131,7 @@ fun ContentAddView(
                 )
                 chronosVM.stop()
                 navController.popBackStack()
-                
+
             }) {
                 Text(text = "Save")
             }

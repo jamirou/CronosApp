@@ -16,7 +16,7 @@ fun NavManager(chronosVM: ChronometerViewModel, chrVM: CronosViewModel){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "Home"){
         composable("Home"){
-            HomeView(navController)
+            HomeView(navController, chrVM)
         }
         composable("AddView"){
             AddView(navController, chronosVM, chrVM)
