@@ -18,8 +18,7 @@ object AppModule {
     @Singleton
     @Provides
     fun providesCronosDao(cronoDataBase: CronosDataBase): CronosDataBaseDao {
-        return cronoDataBase.cronosDao()
-    }
+        return cronoDataBase.cronosDao() }
 
     @Singleton
     @Provides
