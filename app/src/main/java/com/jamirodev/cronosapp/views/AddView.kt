@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,13 +28,16 @@ import com.jamirodev.cronosapp.R
 import com.jamirodev.cronosapp.components.CircleButton
 import com.jamirodev.cronosapp.components.FloatButton
 import com.jamirodev.cronosapp.components.MainIconButton
+import com.jamirodev.cronosapp.components.MainTextField
 import com.jamirodev.cronosapp.components.MainTitle
 import com.jamirodev.cronosapp.components.formatTime
+import com.jamirodev.cronosapp.model.Cronos
 import com.jamirodev.cronosapp.viewModel.ChronometerViewModel
+import com.jamirodev.cronosapp.viewModel.CronosViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddView(navController: NavController, chronosVM: ChronometerViewModel) {
+fun AddView(navController: NavController, chronosVM: ChronometerViewModel, chrVM: CronosViewModel) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(title = { MainTitle(title = "ADD") },
@@ -51,7 +52,7 @@ fun AddView(navController: NavController, chronosVM: ChronometerViewModel) {
             )
         }
     ) {
-        ContentAddView(it, navController, chronosVM)
+        ContentAddView(it, navController, chronosVM, chrVM)
     }
 }
 
@@ -59,7 +60,8 @@ fun AddView(navController: NavController, chronosVM: ChronometerViewModel) {
 fun ContentAddView(
     it: PaddingValues,
     navController: NavController,
-    chronosVM: ChronometerViewModel
+    chronosVM: ChronometerViewModel,
+    chrVM: CronosViewModel
 ) {
 
     val state = chronosVM.state
@@ -113,5 +115,27 @@ fun ContentAddView(
                 chronosVM.showTextField()
             }
         }
+
+        if (state.showTextField) {
+            MainTextField(
+                value = state.title,
+                onValueChange = { chronosVM.onValue(it) },
+                label = "Title"
+            )
+            Button(onClick = {
+                chrVM.addCrono(
+                    Cronos(
+                        title = state.title,
+                        crono = chronosVM.time
+                    )
+                )
+                chronosVM.stop()
+                navController.popBackStack()
+                
+            }) {
+                Text(text = "Save")
+            }
+        }
+
     }
 }
