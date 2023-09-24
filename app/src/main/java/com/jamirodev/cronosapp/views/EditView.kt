@@ -16,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -75,6 +76,11 @@ fun ContentEditView(
     LaunchedEffect(state.chronometerActive) {
         chronosVM.chronos()
     }
+
+    LaunchedEffect(Unit) {
+        chronosVM.getCronoById(id)
+    }
+
     Column(
         modifier = Modifier
             .padding(it)
@@ -87,7 +93,7 @@ fun ContentEditView(
             fontSize = 50.sp,
             fontWeight = FontWeight.Bold
         )
-        Text(text = id.toString())
+
         Row(
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier.padding(vertical = 16.dp)
@@ -106,43 +112,32 @@ fun ContentEditView(
             ) {
                 chronosVM.pause()
             }
-            //STOP
-            CircleButton(
-                icon = painterResource(id = R.drawable.ic_stop),
-                enabled = !state.chronometerActive
-            ) {
-                chronosVM.stop()
-            }
-
-            //SAVE AND SHOW
-            CircleButton(
-                icon = painterResource(id = R.drawable.ic_save),
-                enabled = state.showSaveButton
-            ) {
-                chronosVM.showTextField()
-            }
         }
 
-        if (state.showTextField) {
-            MainTextField(
-                value = state.title,
-                onValueChange = { chronosVM.onValue(it) },
-                label = "Title"
-            )
-            Button(onClick = {
-                chrVM.addCrono(
-                    Cronos(
-                        title = state.title,
-                        crono = chronosVM.time
-                    )
+        MainTextField(
+            value = state.title,
+            onValueChange = { chronosVM.onValue(it) },
+            label = "Title"
+        )
+        Button(onClick = {
+            chrVM.updateCrono(
+                Cronos(
+                    id = id,
+                    title = state.title,
+                    crono = chronosVM.time
                 )
-                chronosVM.stop()
-                navController.popBackStack()
+            )
+            navController.popBackStack()
 
-            }) {
-                Text(text = "Save")
+        }) {
+            Text(text = "Save")
+        }
+        DisposableEffect(Unit) {
+            onDispose {
+                chronosVM.stop()
             }
         }
+
 
     }
 }
