@@ -1,11 +1,15 @@
 package com.jamirodev.cronosapp.views
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.jamirodev.cronosapp.components.CircleButton
 import com.jamirodev.cronosapp.components.FloatButton
 import com.jamirodev.cronosapp.components.MainIconButton
 import com.jamirodev.cronosapp.components.MainTitle
@@ -69,11 +74,42 @@ fun ContentAddView(
     ) {
         Text(
             text = formatTime(chronosVM.time),
-            fontSize =50.sp,
+            fontSize = 50.sp,
             fontWeight = FontWeight.Bold
         )
-        Button(onClick = { chronosVM.init() }) {
-            Text(text = "Init")
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(vertical = 16.dp)
+        ) {
+            //INIT
+            CircleButton(
+                icon = Icons.Default.PlayArrow,
+                enabled = !state.chronometerActive
+            ) {
+                chronosVM.init()
+            }
+            //PAUSE
+            CircleButton(
+                icon = Icons.Default.Star,
+                enabled = state.chronometerActive
+            ) {
+                chronosVM.pause()
+            }
+            //STOP
+            CircleButton(
+                icon = Icons.Default.PlayArrow,
+                enabled = !state.chronometerActive
+            ) {
+                chronosVM.stop()
+            }
+
+            //SAVE AND SHOW
+            CircleButton(
+                icon = Icons.Default.PlayArrow,
+                enabled = state.showSaveButton
+            ) {
+                chronosVM.showTextField()
+            }
         }
     }
 }
