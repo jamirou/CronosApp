@@ -1,9 +1,11 @@
 package com.jamirodev.cronosapp.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.jamirodev.cronosapp.viewModel.ChronometerViewModel
 import com.jamirodev.cronosapp.viewModel.CronosViewModel
 import com.jamirodev.cronosapp.views.AddView
@@ -21,8 +23,11 @@ fun NavManager(chronosVM: ChronometerViewModel, chrVM: CronosViewModel){
         composable("AddView"){
             AddView(navController, chronosVM, chrVM)
         }
-        composable("EditView"){
-            EditView(navController)
+        composable("EditView/{id}", arguments = listOf(
+            navArgument("id") { type = NavType.LongType }
+        )){
+            val id = it.arguments?.getLong("id") ?: 0
+            EditView(navController, chronosVM, chrVM, id)
         }
     }
 }
