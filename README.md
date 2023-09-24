@@ -1,6 +1,7 @@
 # Cronómetro con CRUD y Base de Datos SQLite
 
 Este proyecto es una aplicación de cronómetro que permite realizar operaciones CRUD (Crear, Leer, Actualizar, Borrar) y almacena los registros localmente utilizando SQLite como base de datos. A continuación, se presentan las principales características y componentes del proyecto:
+
 <img src="https://github.com/jamirou/CronosApp/assets/48457084/dae01836-2f05-4571-82d4-d19e788882f7" width="300" alt="cap1">
 
 
