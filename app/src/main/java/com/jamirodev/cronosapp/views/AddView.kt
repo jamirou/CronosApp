@@ -21,10 +21,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.jamirodev.cronosapp.R
 import com.jamirodev.cronosapp.components.CircleButton
 import com.jamirodev.cronosapp.components.FloatButton
 import com.jamirodev.cronosapp.components.MainIconButton
@@ -83,21 +85,21 @@ fun ContentAddView(
         ) {
             //INIT
             CircleButton(
-                icon = Icons.Default.PlayArrow,
+                icon = painterResource(id = R.drawable.ic_play),
                 enabled = !state.chronometerActive
             ) {
                 chronosVM.init()
             }
             //PAUSE
             CircleButton(
-                icon = Icons.Default.Star,
+                icon = painterResource(id = R.drawable.ic_pause),
                 enabled = state.chronometerActive
             ) {
                 chronosVM.pause()
             }
             //STOP
             CircleButton(
-                icon = Icons.Default.PlayArrow,
+                icon = painterResource(id = R.drawable.ic_stop),
                 enabled = !state.chronometerActive
             ) {
                 chronosVM.stop()
@@ -105,7 +107,7 @@ fun ContentAddView(
 
             //SAVE AND SHOW
             CircleButton(
-                icon = Icons.Default.PlayArrow,
+                icon = painterResource(id = R.drawable.ic_save),
                 enabled = state.showSaveButton
             ) {
                 chronosVM.showTextField()
